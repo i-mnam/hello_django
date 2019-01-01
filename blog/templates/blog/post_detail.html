@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title> {{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+
+    {{ post.content|linebreaks }}
+    linebreaks with  P tag
+    
+    <hr/>
+    
+    <h3>Comments</h3>
+    <ul>
+        {% for comment in post.comment_set.all %}
+            <li>
+                {{ comment.message }}
+                <small>by {{ comment.author }}</small>
+                <small>at {{ comment.updated_at }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <hr/>
+    <a href="{% url "blog:post_list" %}">글목록</a>
+</body>
+</html>
