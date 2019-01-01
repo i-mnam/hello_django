@@ -11,3 +11,7 @@ def mysum(request, numbers):
     # s가 거짓일 때 (or의 뜻) 0으로 치환
     print("result:", result)
     return HttpResponse(result)
+
+
+def hello(request, name, age):
+    return HttpResponse('안녕하세요. {}씨. {}살 이시네요.'.format(name, age))
