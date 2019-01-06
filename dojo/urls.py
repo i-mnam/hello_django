@@ -7,4 +7,9 @@ urlpatterns = [ # 패턴과 주소가 꼭 1:1대응일 필요 없다!!
     url(r'^sum/(?P<numbers>[\d/]+)/$', views.mysum), 
     # 끝에 왜 /$ 인지 "/"이게 없으면 왜 안되는지 모르겠다.
     url(r'^hello/(?P<name>[a-zA-Z]+)/(?P<age>\d+)/$', views.hello),
+
+    url(r'^list1/$', views.post_list1),
+    url(r'^list2/$', views.post_list2),
+    url(r'^list3/$', views.post_list3),
+    url(r'^excel/$', views.excel_download),
 ]
