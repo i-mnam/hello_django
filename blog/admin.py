@@ -21,7 +21,7 @@ class PostAdmin(admin.ModelAdmin):
         self.message_user(request, '{}건의 포스팅을 Draft상태로 변경'.format(updated_count))
     make_draft.short_description = '지정 포스팅을 Draft상태로 변경합니다.'
 
-    def make_published(self, request, queryset):
+    def make_published(self, request, queryset): # 어떠한 데이터가 선택되었는지 알 수 있게 queryset 인자가 있어야해.
         published_count = queryset.update(status='p')
         self.message_user(request, '{}건의 포스팅을 Published상태로 변경'.format(published_count))
     make_published.short_description = '지정 포스팅을 Published상태로 변경합니다.'
