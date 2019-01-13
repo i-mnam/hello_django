@@ -29,7 +29,7 @@ class Post(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['id'] # ['-id']
 
     def __str__(self): # don't need to migrate
         return self.title 
