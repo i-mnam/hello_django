@@ -25,11 +25,18 @@ def post_list(request):
 
 def post_detail(request, id):
     '''
+    python3.6 manager.py shell
+    from blog.models import Post
+    Post.objects.filter(id=1002).delete()  
+    '''
+
+    '''
     try:
         post = Post.objects.get(id=id)
     except Post.DoesNotExist:
         raise Http404
     이렇게 404예외처리 안해주면 디버그모드로 매우 안예쁘게 나온다.
+    지정 Record가 없는 것은 서버오류가 아닙니다 (!= 500)
     '''
 
     post = get_object_or_404(Post, id=id)
