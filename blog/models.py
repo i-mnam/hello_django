@@ -27,16 +27,18 @@ class Post(models.Model):
     lnglat = models.CharField(max_length=50, blank=True,
         validators=[lnglat_validator], help_text='경도/위도 포맷으로 입력')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
-
+    # add!
+    tag_set = models.ManyToManyField('Tag') #class 형태로 입력하지 않는 이유: Tag가 Post 보다 하위에 정의되어 있어서.
     class Meta:
-        ordering = ['id'] # ['-id']
+        ordering = ['-id'] # ['-id']
 
     def __str__(self): # don't need to migrate
         return self.title 
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post) # POINT!
+    post = models.ForeignKey(Post) 
+    # POINT! 실제 DB에는 post_id 라고 저장됨. # blog_post라는 table도 만들어지나 보다.
     author = models.CharField(max_length=20)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -44,3 +46,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.post # print by title
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+'''
+ Post.objects.filter(tag_set__name__in=['puttyTeaRi', 'YeJi_Putty'])
+Out[4]: <QuerySet [<Post: 제목 #999>, <Post: 제목 #999>, <Post: 제목 #997>]>
+'''
