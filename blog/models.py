@@ -28,7 +28,7 @@ class Post(models.Model):
         validators=[lnglat_validator], help_text='경도/위도 포맷으로 입력')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
     # add!
-    tag_set = models.ManyToManyField('Tag') #class 형태로 입력하지 않는 이유: Tag가 Post 보다 하위에 정의되어 있어서.
+    tag_set = models.ManyToManyField('Tag', blank=True) #class 형태로 입력하지 않는 이유: Tag가 Post 보다 하위에 정의되어 있어서.
     class Meta:
         ordering = ['-id'] # ['-id']
 
