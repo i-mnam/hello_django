@@ -4,6 +4,7 @@ import re
 from django.conf import settings
 from django.db import models
 from django.forms import ValidationError
+from django.core.urlresolvers import reverse
 
 
 
@@ -33,9 +34,13 @@ class Post(models.Model):
     tag_set = models.ManyToManyField('Tag', blank=True) #class 형태로 입력하지 않는 이유: Tag가 Post 보다 하위에 정의되어 있어서.
     class Meta:
         ordering = ['-id'] # ['-id']
-
+ 
     def __str__(self): # don't need to migrate
         return self.title 
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', kwargs={'id': self.id})
+        #return reverse('blog:post_detail', args=[self.id])
 
 
 class Comment(models.Model):
