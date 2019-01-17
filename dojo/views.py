@@ -30,7 +30,7 @@ def post_list1(request):
 
 def post_list2(request):
     name="K.Teari"
-    return render(request, 'post_list.html', {'name':name})
+    return render(request, 'dojo/post_list.html', {'name':name})
     # dojo/post_list.html은 탬플릿을 아예 못찾음..
 
 
