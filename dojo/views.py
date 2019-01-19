@@ -3,7 +3,7 @@
 import os
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import PostForm, PostModelForm
 from .models import Post
 
@@ -52,6 +52,23 @@ def post_new(request):
         'form':form
     })
 
+
+def post_edit(request, id):
+    post = get_object_or_404(Post, id=id)
+
+    if request.method == 'POST':
+        form = PostModelForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save()
+            post = form.save(commit=False)
+            post.ip = request.META['REMOTE_ADDR']
+            post.save()
+            return redirect('/dojo/')  # namespace:name
+    else:
+        form = PostModelForm(instance=post)
+    return render(request, 'dojo/post_form.html', {
+        'form':form
+    })
 
 def mysum(request, numbers):
     # numbers = "1/4526/231/3/252/457"

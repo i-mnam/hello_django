@@ -5,6 +5,7 @@ from . import views, views_cbv
 
 urlpatterns = [ # 패턴과 주소가 꼭 1:1대응일 필요 없다!!
     url(r'^new/$', views.post_new), # ep21. form용
+    url(r'^(?P<id>\d+)/edit/$', views.post_edit), # ep22 form 수정용
 
     url(r'^sum/(?P<numbers>[\d/]+)/$', views.mysum), 
     # 끝에 왜 /$ 인지 "/"이게 없으면 왜 안되는지 모르겠다.

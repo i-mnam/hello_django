@@ -1,5 +1,6 @@
 
-<form action="" method="POST">
+<form action="" method="POST"> 
+    <!-- action에 get 방식을 위한 인자를 넣어도 됨. 그럼 url에 붙어서 데이터가 들어온다.-->
     {% csrf_token %}
     <table>
         {{form.as_table}}
