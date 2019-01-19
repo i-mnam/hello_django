@@ -4,15 +4,17 @@ import os
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from .forms import PostForm
+from .forms import PostForm, PostModelForm
 from .models import Post
 
 
 def post_new(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES) 
-        #order! 이 form은 인자를 받았으니,       사용자가 입력한 데이터를 알 수 있게됨.
+        # form = PostForm(request.POST, request.FILES)#order! 이 form은 인자를 받았으니, 사용자가 입력한 데이터를 알 수 있게됨.
+        form = PostModelForm(request.POST, request.FILES) 
+
         if form.is_valid(): # form에 걸려있는 validations 모두 호출, 하나라도 false면 false
+            '''
             #print("cleaned_data :",form.cleaned_data) # user가 입력한 값을 사전형으로 받음.
             
             # 방법1)
@@ -22,28 +24,29 @@ def post_new(request):
             # post.save()
 
             # 방법2)
-            '''
             post = Post(title=form.cleaned_data['title'],
                         content = form.cleaned_data['content'])
             post.save()
-            '''
 
             # 방법3)
-            '''
             post = Post.objects.create(title=form.cleaned_data['title'],
                                        content = form.cleaned_data['content'])
-            '''
 
             # 방법4)
             #post = Post.objects.create(**form.cleaned_data)
-
+            '''
             # last)
-            post = form.save()
+            #post = form.save()
+            # model form 에서 지원되는 args 값을 활용
+            post = form.save(commit=False)
+            post.ip = request.META['REMOTE_ADDR']
+            post.save()
             return redirect('/dojo/') # namespace:name을 사용해도 됨. 뭘하고 싶든 여동생 마음
         else:
             form.errors
     else:
-        form = PostForm()
+        # form = PostForm()
+        form = PostModelForm()
     
     return render(request, 'dojo/post_form.html', {
         'form':form
