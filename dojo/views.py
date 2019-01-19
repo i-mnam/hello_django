@@ -35,7 +35,10 @@ def post_new(request):
             '''
 
             # 방법4)
-            post = Post.objects.create(**form.cleaned_data)
+            #post = Post.objects.create(**form.cleaned_data)
+
+            # last)
+            post = form.save()
             return redirect('/dojo/') # namespace:name을 사용해도 됨. 뭘하고 싶든 여동생 마음
         else:
             form.errors
