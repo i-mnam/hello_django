@@ -1,15 +1,51 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/sketchy/bootstrap.min.css" />
+<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <h2>Post Form</h2>
-            <form action="" method="POST"> 
+            <form action="" method="POST" class="form-horizontal"> 
                 <!-- action에 get 방식을 위한 인자를 넣어도 됨. 그럼 url에 붙어서 데이터가 들어온다.-->
                 {% csrf_token %}
+
+                <!-- 무슨error 표시이지? : 다수 fields의 error일 떄만 나오나?! -->
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{error}}
+                    </div>
+                {% endfor%}
+
+                <!-- hidden fields는 위젯만 렌더링 -->
+                {% for field in form.hidden_fields %}
+                    {{field}}
+                {% endfor%}
+
+
+                <!-- visible fields는 모든 요소 렌더링 -->
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        {{field.label_tag}}
+                        <div class="col-sm-10">
+                            {{field}}
+                            {% if field.help_text %}
+                                <p> class="help-block">{{field.help_text}}</p>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    {{error}}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+                {% comment %}
                 <table class="table talbe-hover table-bordered">
                     {{form.as_table}}
                 </table>
+                {% endcomment %}
             
                 <input type="submit" class="btn btn-primary">
             </form>            
@@ -19,6 +55,10 @@
 
 
 <script>
+$(function(){
+    $('.form-group label').addClass('col-sm-2');
+    $('.form-group input, .form-group textarea').addClass('form-control');
+});
 var dom = document.getElementById('{{form.user_agent.id_for_label}}');
 dom.value = navigator.userAgent;
 </script>
