@@ -129,6 +129,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# FileSystemFinder 를 위한 static 디렉토리 목록
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'askdjango', 'static'),
+]
+
 INTERNAL_IPS = ['127.0.0.1']
 
 
