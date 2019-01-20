@@ -47,12 +47,14 @@
         </div>
     </nav>
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{message.tags}}">
-                [{{message.tags}}] {# 메세지 level #}
-                {{message.message}}
-            </div>
-        {% endfor %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    [{{message.tags}}] {# 메세지 level #}
+                    {{message.message}}
+                </div>
+            {% endfor %}
+        </div>
     {% endif%}
 
 

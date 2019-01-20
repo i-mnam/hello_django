@@ -19,6 +19,9 @@ def post_list(request):
     if q:
         qs = qs.filter(title__icontains=q) # _ * 2 !! not once!!!
 
+    # message test
+    messages.error(request, 'error test')
+
     return render(request, 'blog/post_list.html', {
         'post_list' : qs,
         'q' : q,
