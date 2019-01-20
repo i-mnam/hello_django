@@ -17,6 +17,7 @@ class Post(models.Model):
     # '' user로 부터 입력받는 정보 아님!
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user_agent = models.CharField(max_length=200)
 
 
 class GameUser(models.Model):

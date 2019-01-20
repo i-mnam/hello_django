@@ -29,4 +29,8 @@ class PostForm(forms.Form):
 class PostModelForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content'] #'ip']
+        fields = ['title', 'content', 'user_agent'] #'ip'] 
+        # 여기에 추가를 안하면 model엔 있어도 화면단에서 표현 생략된다.
+        widgets = {
+            'user_agent' : forms.HiddenInput,
+        }
