@@ -134,6 +134,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'askdjango', 'static'),
 ]
 
+# 실서버 static파일 관리 연습용
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 INTERNAL_IPS = ['127.0.0.1']
 
 
