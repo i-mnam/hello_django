@@ -1,10 +1,24 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.2.1/sketchy/bootstrap.min.css" />
 
-<form action="" method="POST"> 
-    <!-- action에 get 방식을 위한 인자를 넣어도 됨. 그럼 url에 붙어서 데이터가 들어온다.-->
-    {% csrf_token %}
-    <table>
-        {{form.as_table}}
-    </table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Post Form</h2>
+            <form action="" method="POST"> 
+                <!-- action에 get 방식을 위한 인자를 넣어도 됨. 그럼 url에 붙어서 데이터가 들어온다.-->
+                {% csrf_token %}
+                <table class="table talbe-hover table-bordered">
+                    {{form.as_table}}
+                </table>
+            
+                <input type="submit" class="btn btn-primary">
+            </form>            
+        </div>
+    </div>
+</div>
 
-    <input type="submit">
-</form>
+
+<script>
+var dom = document.getElementById('{{form.user_agent.id_for_label}}');
+dom.value = navigator.userAgent;
+</script>
