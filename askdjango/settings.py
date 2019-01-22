@@ -137,6 +137,11 @@ STATICFILES_DIRS = [
 # 실서버 static파일 관리 연습용
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# media 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 INTERNAL_IPS = ['127.0.0.1']
 
 
