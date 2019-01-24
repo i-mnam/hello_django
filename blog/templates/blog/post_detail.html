@@ -11,7 +11,10 @@
             {# <img src="/media/{{post.photo}}" style="max-width:100%;" /> #}
             
             {% if post.photo %}
-                <img src="{{post.photo.url}}" style="max-width:100%;" /> 
+                {#<img src="{{post.photo.url}}" style="max-width:100%;" /> #}
+                {#{{post.photo_thumbnail.url}}#}
+                <!--/media/CACHE/images/blog/post/2019/01/24/ian-dool.. -->
+                <img src="{{post.photo_thumbnail.url}}" />
             {% endif %}
             {{ post.content|linebreaks }}
             <!--참고: linebreaks with  P tag-->
