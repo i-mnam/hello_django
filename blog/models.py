@@ -5,9 +5,9 @@ from django.conf import settings
 from django.db import models
 from django.forms import ValidationError
 from django.core.urlresolvers import reverse
-from imagekit.models import ImageSpecField
+# from imagekit.models import ImageSpecField
 from imagekit.processors import Thumbnail
-#from imagekit.models import ProcessedImageField
+from imagekit.models import ProcessedImageField
 
 
 
@@ -32,11 +32,19 @@ class Post(models.Model):
     photo = models.ImageField(blank=True, upload_to='blog/post/%Y/%m/%d')
 
     # thumbnail
+    '''
     photo_thumbnail = ImageSpecField(
         source='photo',
         processors=[Thumbnail(300,300)],
         format='JPEG',
         options={'quality':60}
+    )
+    '''
+    photo = ProcessedImageField(
+        upload_to='blog/post/%Y/%m/%d',
+        processors=[Thumbnail(300,300)],
+        format='JPEG',
+        options={'quality':80}
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
