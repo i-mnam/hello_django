@@ -1,4 +1,5 @@
 {% extends 'blog/layout.html' %}
+{% load imagekit %}
 
 {% block title %}
     {{post.title}}
@@ -15,7 +16,15 @@
                 {#{{post.photo_thumbnail.url}}#}
                 <!--/media/CACHE/images/blog/post/2019/01/24/ian-dool.. -->
                 {#<img src="{{post.photo_thumbnail.url}}" />#}
-                <img src="{{post.photo.url}}" />
+                {#<img src="{{post.photo.url}}" />#}
+                <img src="{{post.photo.url}}" >
+
+                {% thumbnail "100x100" post.photo %}
+
+                {% thumbnail "100x100" post.photo as thumb %}
+                <img src="{{ thumb.url }}" width="{{ thumb.width }}" height="{{ thumb.height }}" />
+                
+                {% thumbnail "100x100" post.photo -- style="" onclick="" class="" %}
             {% endif %}
             {{ post.content|linebreaks }}
             <!--참고: linebreaks with  P tag-->
