@@ -4,4 +4,5 @@ django-extensions
 ipython[notebook]
 django-bootstrap4
 pilkit
+imagekit
 

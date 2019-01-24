@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'bootstrap4',
     'debug_toolbar',
+    'imagekit', # PILKit # pillow
     'accounts',
     'blog',
     'dojo',
