@@ -1,0 +1,39 @@
+{% include "blog/widgets/input.html" %}
+
+<div id="map_{{ widget.attrs.id }}" style="height:300px;width: 100%;"></div>
+<!--<div id='sth'></div> 원래 div는 크기가 없어서 크기를 지정해줘야 보임 -->
+<script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="//maps.googleapis.com/maps/api/js"></script>
+<script>
+    $(function() {
+        //console.log("{{widget.attrs.id}}");
+        //$('#{{widget.attrs.id}}').val('37.57,129.92');
+
+        {% if widget.value %}
+            var center = new google.maps.LatLng({{ widget.value }});
+        {% else %}
+            var center = new google.maps.LatLng(37.57,129.92);
+            $('#{{ widget.attrs.id }}').val(center.lat() + ',' + center.lng());
+        {% endif %}
+        
+
+        //document.getElementById('map_{{ widget.attrs.id }}');
+        var map_el = $('#map_{{ widget.attrs.id }}')[0];
+        var map = new google.maps.Map(map_el, {
+            zoom: 4,
+            center: center,
+        });
+
+        var marker = new google.maps.Marker({
+            map: map, //'map': map
+            position: center,
+        });
+
+        map.addListener('click', function(e) {
+            marker.setPosition(e.latLng);
+
+            var loc = e.latLng.lat() + ',' + e.latLng.lng();
+            $('#{{widget.attrs.id}}').val(loc);
+        });
+    });
+</script>

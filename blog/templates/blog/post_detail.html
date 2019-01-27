@@ -28,6 +28,32 @@
             {% endif %}
             {{ post.content|linebreaks }}
             <!--참고: linebreaks with  P tag-->
+            {% if post.latlng %}
+                <hr/>
+                <div id="map_id_lnglat_detail" style="height: 300px; width: 100%; position: relative; overflow: hidden;">
+                </div>
+                <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+                <script src="//maps.googleapis.com/maps/api/js"></script>
+                <script>
+                    $(function() {
+                        //console.log("{{widget.attrs.id}}");
+                        //$('#{{widget.attrs.id}}').val('37.57,129.92');
+                        var center = new google.maps.LatLng(37.57,129.92);
+
+                        //document.getElementById('map_{{ widget.attrs.id }}');
+                        var map_el = $('#map_{{ widget.attrs.id }}_detail')[0];
+                        var map = new google.maps.Map(map_el, {
+                            zoom: 4,
+                            center: center,
+                        });
+
+                        map.addListener('click', function(e) {
+                            var loc = e.latLng.lat() + ',' + e.latLng.lng();
+                            $('#{{widget.attrs.id}}').val(loc);
+                        });
+                    });
+                </script>
+            {% endif %}
             
             <hr/>
             <h4>Comments</h4>
