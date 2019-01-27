@@ -8,6 +8,9 @@ from .forms import PostForm
 
 
 def post_list(request):
+    print(repr(request.user))
+    # <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x1105afb70>>
+
     qs = Post.objects.all() # django.db.models.query.QuerySet
     q = request.GET.get('q', '') # str
     '''
