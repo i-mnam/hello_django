@@ -91,7 +91,8 @@ def post_edit(request, id):
 
 
 def comment_list(request):
-    comment_list = Comment.objects.all()
+    # comment_list = Comment.objects.all()
+    comment_list = Comment.objects.all().select_related('post')
     return render(request, 'blog/comment_list.html', {
         'comment_list' : comment_list,
     })
@@ -120,4 +121,5 @@ def comment_list(request):
     SELECT ••• FROM "blog_post" WHERE "blog_post"."id" = '407'
     106 similar queries.
     Comment.objects.all().count()
+    49.73ms
     '''
