@@ -3,7 +3,7 @@
 from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm
 
 
@@ -88,3 +88,36 @@ def post_edit(request, id):
         return render(request, 'blog/post_form.html', {
             'form' : form,
         })
+
+
+def comment_list(request):
+    comment_list = Comment.objects.all()
+    return render(request, 'blog/comment_list.html', {
+        'comment_list' : comment_list,
+    })
+    '''
+    from blog.models import Post, Comment
+    Post.objects.all()
+    
+    post_list = list(Post.objects.all())
+    post_list
+
+    import random
+    random.choice(post_list)
+
+    Comment??
+
+    for i in range(100):
+        comment = Commnet()
+        comment.post = random.choice(post_list)
+        comment.author = 'i-mnam'
+        comment.message = 'bulk add content'
+        comment.save()
+    '''
+
+    '''
+    	
+    SELECT ••• FROM "blog_post" WHERE "blog_post"."id" = '407'
+    106 similar queries.
+    Comment.objects.all().count()
+    '''
