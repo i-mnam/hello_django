@@ -10,8 +10,25 @@ from .forms import PostForm
 def post_list(request):
     print(repr(request.user))
     # <SimpleLazyObject: <function AuthenticationMiddleware.process_request.<locals>.<lambda> at 0x1105afb70>>
+    '''
+    1012  77.87ms	
+    SELECT ••• FROM "blog_tag" INNER JOIN "blog_post_tag_set" 
+    ON ("blog_tag"."id" = "blog_post_tag_set"."tag_id") 
+    WHERE "blog_post_tag_set"."post_id" = '1009'
+    1009 similar queries.
+    '''  
+    # qs = Post.objects.all() # django.db.models.query.QuerySet
+         
+    qs = Post.objects.all().prefetch_related('tag_set', 'comment_set')
+    ''' 
+    아래 댓글에도 나오는 "too many SQL variables" 오류인 듯 합니다. SQLite3 에서는 한 쿼리의 변수로 999 제한이 있어서 DB단 제약사항에 걸리신 듯 합니다.
+    DB엔진을 변경하시거나 쿼리하는 방법을 변경해보세요.
 
-    qs = Post.objects.all() # django.db.models.query.QuerySet
+    5  47ms
+    SELECT ••• FROM "blog_tag" INNER JOIN "blog_post_tag_set" 
+    ON ("blog_tag"."id" = "blog_post_tag_set"."tag_id") 
+    WHERE "blog_post_tag_set"."post_id" IN ('1', '2', '3', '4',,,)
+    '''
     q = request.GET.get('q', '') # str
     '''
     QueryDict.get(key, default=None)
@@ -122,4 +139,9 @@ def comment_list(request):
     106 similar queries.
     Comment.objects.all().count()
     49.73ms
+
+
+    SELECT ••• FROM "blog_comment" INNER JOIN "blog_post" 
+    ON ("blog_comment"."post_id" = "blog_post"."id")
+    3 queries  1.06ms
     '''

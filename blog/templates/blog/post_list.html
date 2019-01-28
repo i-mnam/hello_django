@@ -46,10 +46,16 @@
                                 <!-- <a href="/blog/{{ post.id }}">
                                     {{ post.title }}
                                 </a> -->
+                                {% for tag in post.tag_set.all %}
+                                    <span class="label label-info">{{ tag.name }}</span>
+                                {% endfor %}
                             </td>
-                            
                             <td>by {{ post.author}}</td>
                             <td>at {{post.updated_at }}</td>
+                            
+                            {#<td>{{ post.comment_set.all }}</td>#}
+                            {#<td>{{ post.tag_set.all }}</td>#}
+                            <!-- 2021 queries 207.13ms-->
                         </tr>
                     {% endfor %}
                     </tbody>    
