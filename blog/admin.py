@@ -9,8 +9,36 @@ from .models import Post, Comment, Tag
 # 장식자 형태로 지원
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'content_size', 'status', 'created_at', 'updated_at']
+    list_display = ['id', 'title', 'tag_list', 'content_size', 'status', 'created_at', 'updated_at']
     actions = ['make_draft', 'make_published']
+
+    def tag_list(self, post):
+        markup_str = ''
+        for tag in post.tag_set.all():
+            temp = '<span style="background-color: #3498db;">{}</span>'.format(tag.name)
+            markup_str += (temp + ' ')
+        return mark_safe(markup_str)
+        '''
+        105, 10ms 
+        SELECT
+        "blog_tag"."id", "blog_tag"."name"
+        FROM "blog_tag" INNER JOIN "blog_post_tag_set" 
+        ON ("blog_tag"."id" = "blog_post_tag_set"."tag_id") 
+        WHERE "blog_post_tag_set"."post_id" = '1011'
+        '''
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.prefetch_related('tag_set')
+        '''    
+        6, 2ms                
+        SELECT ("blog_post_tag_set"."post_id") AS "_prefetch_related_val_post_id"
+        , "blog_tag"."id", "blog_tag"."name"
+        FROM "blog_tag" INNER JOIN "blog_post_tag_set" 
+        ON ("blog_tag"."id" = "blog_post_tag_set"."tag_id") 
+        WHERE "blog_post_tag_set"."post_id" IN ('900', '901', '902',
+         '903', '904', '905', '906',,,)
+        '''
 
     def content_size(self, post):
         return mark_safe('<strong>{}</strong>글자'.format(len(post.content)))
