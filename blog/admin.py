@@ -29,8 +29,41 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    # pass
+    list_display = ['id', 'author', 'post_content_len']
+    # list_display = ['post'] # post의 __str__ 으로 'POST'항목에 출력됨.
+    def post_content_len(self, comment):
+        return '{}글자'.format(len(comment.post.content))
+    '''
+    SELECT
+    "blog_comment"."id", "blog_comment"."post_id", "blog_comment"."author"
+    , "blog_comment"."message", "blog_comment"."created_at"
+    , "blog_comment"."updated_at"
+    FROM "blog_comment" ORDER BY "blog_comment"."id" DESC LIMIT 100
+    1.8005134478540292%
+    0.25	
+    Sel Expl
 
+
+
+    SELECT
+    "blog_post"."id", "blog_post"."user_id", "blog_post"."title"
+    , "blog_post"."content", "blog_post"."photo", "blog_post"."created_at"
+    , "blog_post"."updated_at", "blog_post"."tags", "blog_post"."lnglat"
+    , "blog_post"."status"
+    FROM "blog_post" WHERE "blog_post"."id" = '1003'
+    3 similar queries.   Duplicated 2 times. # 이렇게 중복될 수도 있지 Comment에서는! 
+    '''
+    # 105, 13ms   5, 1ms
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # return qs
+        return qs.select_related('post')
+    '''
+    FROM "blog_comment" INNER JOIN "blog_post" 
+    ON ("blog_comment"."post_id" = "blog_post"."id") 
+    ORDER BY "blog_comment"."id" DESC LIMIT 100
+    '''
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
