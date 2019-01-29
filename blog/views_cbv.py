@@ -5,8 +5,14 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import Post
 
-post_list = ListView.as_view(model=Post, paginate_by=10)
+#post_list = ListView.as_view(model=Post, paginate_by=10)
 # http://localhost:8080/blog/?page=2
+# 14,2ms  5,1ms 
+post_list = ListView.as_view(model=Post,
+                            queryset=Post.objects.all().prefetch_related('tag_set'),
+                            paginate_by=10
+                            )
+
 post_detail = DetailView.as_view(model=Post, pk_url_kwarg='id')
 
 '''
