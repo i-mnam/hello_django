@@ -45,6 +45,15 @@ INSTALLED_APPS = [
     'blog',
     'dojo',
     'shop',
+    # 페이스북/카카오/네이버 로그인 
+    # python3.6 manage.py migrate > showmigrations : account, sites, socialaccount
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.naver',
 ]
 
 MIDDLEWARE = [
@@ -111,6 +120,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',# 기본 인증 백엔드
+    'allauth.account.auth_backends.AuthenticationBackend',# 추가
+]
+
+# 디폴트 SITE의 id
+# 등록하지 않으면, 각 요청 시에 host명의 Site 인스턴스를 찾습니다. 
+SITE_ID = 1
+
+# 이메일 확인을 하지 않음. 
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
