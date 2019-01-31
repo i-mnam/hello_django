@@ -32,11 +32,12 @@ def profile(request):
 
 def login(request):
     providers = []
-    for provider in get_providers():# settings/INSTALLED_APPS 내에서 활성화된 목록
+    for provider in get_providers():# settings/INSTALLED_APPS 내에서 활성화된 provider목록을 가져옴
         # social_app속성은 provider에는 없는 속성입니다.
         try:
             # 실제 Provider 별 Client id/secret 이 등록이 되어있는가?
-            provider.socail_app = SocialApp.objects.get(provider=provider.id, sites=settings.SITE_ID)
+            provider.social_app = SocialApp.objects.get(provider=provider.id, sites=settings.SITE_ID)
+            print(provider.social_app)
         except SocialApp.DoesNotExist:
             provider.socail_app = None
         providers.append(provider)
